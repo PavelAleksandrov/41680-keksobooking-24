@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Павел Александров](https://up.htmlacademy.ru/javascript/24/user/41680).
-* Наставник: `Неизвестно`.
+* Наставник: [RAMAN LAURYNIUK](https://htmlacademy.ru/profile/id1666565).
 
 ---
 
