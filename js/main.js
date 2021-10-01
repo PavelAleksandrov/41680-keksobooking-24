@@ -10,11 +10,13 @@ const getRandomNumber = (from, to) => {
     return;
   }
   // console.log(Math.floor(Math.random() * (to - from + 1) + from));
+  // eslint-disable-next-line no-undef
   return math.random(to, from);
 };
 
 getRandomNumber(1, 5);
 
+// eslint-disable-next-line no-undef
 const getRandomNumberWithDec = (from, to, decimal) => math.random(from, to).toFixed(decimal);
 
 getRandomNumberWithDec(0, 50, 5);
