@@ -20,3 +20,4 @@ getRandomNumber(1, 5);
 const getRandomNumberWithDec = (from, to, decimal) => math.random(from, to).toFixed(decimal);
 
 getRandomNumberWithDec(0, 50, 5);
+let age = 99;
