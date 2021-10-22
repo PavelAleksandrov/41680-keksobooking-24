@@ -1,3 +1,3 @@
-import { getAdsWithRandomData } from '/js/utils';
+import { getAdsWithRandomData } from './utils.js';
 
 getAdsWithRandomData(10);

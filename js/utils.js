@@ -1,5 +1,4 @@
-import math from 'mathjs';
-import { CHECK_TIME, FEATURES, PHOTOS, TYPES } from './data';
+import { CHECK_TIME, FEATURES, PHOTOS, TYPES } from './data.js';
 
 const getRandomNumber = (from, to) => {
   from = Math.floor(from);
@@ -24,7 +23,7 @@ const getAdsWithRandomData = (adsCount) => {
       },
       offer: {
         title: 'Отличный вариант',
-        address: `${this.location.lat}, ${this.location.lng}`,
+        address: '',
         price: getRandomNumberWithDec(1000, 8000),
         type: TYPES[getRandomNumberWithDec(0, TYPES.length - 1)],
         rooms: getRandomNumberWithDec(1, 4),
