@@ -13,10 +13,11 @@
   "devDependencies": {
     "browser-sync": "2.26.14",
     "eslint": "7.18.0",
-    "eslint-config-htmlacademy": "4.0.0"
+    "eslint-config-htmlacademy": "4.1.0"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+  },
   "scripts": {
     "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
     "test": "eslint js/"
@@ -24,5 +25,6 @@
   "engines": {
     "node": "14.x",
     "npm": "6.x"
-  }
+  },
+  "type": "module"
 }
