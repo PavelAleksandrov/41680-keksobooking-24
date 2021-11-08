@@ -1,3 +1,3 @@
-import { getAdsWithRandomData } from './utils.js';
+import { generateAdvert } from './genSimilarElMarkup.js';
 
-getAdsWithRandomData(10);
+generateAdvert();

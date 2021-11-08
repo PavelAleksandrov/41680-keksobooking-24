@@ -27,7 +27,7 @@ const getAdsWithRandomData = (adsCount) => {
         price: getRandomNumberWithDec(1000, 8000),
         type: TYPES[getRandomNumberWithDec(0, TYPES.length - 1)],
         rooms: getRandomNumberWithDec(1, 4),
-        guest: getRandomNumberWithDec(1, 7),
+        guests: getRandomNumberWithDec(1, 7),
         checkin: CHECK_TIME[getRandomNumberWithDec(0, CHECK_TIME.length - 1)],
         checkout: CHECK_TIME[getRandomNumberWithDec(0, CHECK_TIME.length - 1)],
         features: FEATURES.slice(0, getRandomNumberWithDec(1, FEATURES.length - 1)),
