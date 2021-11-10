@@ -3,6 +3,8 @@ const houseType = document.querySelector('#type');
 const roomNumber = document.querySelector('#room_number');
 const price = document.querySelector('#price');
 const capacity = document.querySelector('#capacity');
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
 
 window.addEventListener('load', () => {
   setDefaultForm();
@@ -13,6 +15,16 @@ houseType.addEventListener('change', (event) => {
 roomNumber.addEventListener('change', (event) => {
   changeRoomNumber(event.target.value);
 });
+timeIn.addEventListener('change', (event) => {
+  changeTime(event.target.value, timeOut);
+});
+timeOut.addEventListener('change', (event) => {
+  changeTime(event.target.value, timeIn);
+});
+
+function changeTime(currentTime, timeForChange) {
+  Array.from(timeForChange).forEach((option) => option.selected = option.value === currentTime);
+}
 
 function setDefaultForm() {
   form.method = 'post';
