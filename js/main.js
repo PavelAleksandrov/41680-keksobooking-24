@@ -1,3 +1,8 @@
-import { generateAdvert } from './genSimilarElMarkup.js';
+import { getAdsWithRandomData } from './utils.js';
 
-generateAdvert();
+import { setActivePageState, setDisabledPageState } from './form.js';
+
+getAdsWithRandomData(10);
+
+setActivePageState();
+setDisabledPageState();
