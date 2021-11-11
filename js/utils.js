@@ -30,9 +30,9 @@ const getAdsWithRandomData = (adsCount) => {
         guests: getRandomNumberWithDec(1, 7),
         checkin: CHECK_TIME[getRandomNumberWithDec(0, CHECK_TIME.length - 1)],
         checkout: CHECK_TIME[getRandomNumberWithDec(0, CHECK_TIME.length - 1)],
-        features: FEATURES.slice(0, getRandomNumberWithDec(1, FEATURES.length - 1)),
+        features: FEATURES.slice(0, getRandomNumberWithDec(1, FEATURES.length)),
         description: 'С видом на море',
-        photos: PHOTOS.slice(0, getRandomNumberWithDec(1, PHOTOS.length - 1)),
+        photos: PHOTOS.slice(0, getRandomNumberWithDec(1, PHOTOS.length)),
       },
       location: {
         lat: getRandomNumberWithDec(35.65000, 35.70000, 5),

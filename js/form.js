@@ -1,3 +1,5 @@
+import { getCoordinates } from './map.js';
+
 const form = document.querySelector('.ad-form');
 const houseType = document.querySelector('#type');
 const roomNumber = document.querySelector('#room_number');
@@ -5,10 +7,8 @@ const price = document.querySelector('#price');
 const capacity = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+export const address = document.querySelector('#address');
 
-window.addEventListener('load', () => {
-  setDefaultForm();
-});
 houseType.addEventListener('change', (event) => {
   changeHousePrice(event.target.value);
 });
@@ -26,7 +26,7 @@ function changeTime(currentTime, timeForChange) {
   Array.from(timeForChange).forEach((option) => option.selected = option.value === currentTime);
 }
 
-function setDefaultForm() {
+export function setDefaultForm() {
   form.method = 'post';
   form.enctype = 'multipart/form-data';
   form.action = 'https://24.javascript.pages.academy/keksobooking';
@@ -68,6 +68,18 @@ function getPrice(currentHouseType) {
   }
 }
 
-export function a() {
-  return true;
+export function setActivePageState() {
+  address.value = `lat ${math.round(getCoordinates().lat, 5)}, lng ${math.round(getCoordinates().lng, 5)}`;
+  document.querySelector('.ad-form').classList.add(['.ad-form--disabled']);
+  document.querySelector('.map__filters').classList.add(['.map__filters--disabled']);
+  document.querySelectorAll('fieldset').forEach((item) => item.disabled = true);
+  Array.from(document.querySelector('.map__filters')).forEach((item) => item.disabled = true);
 }
+
+export function setDisabledPageState() {
+  document.querySelector('.ad-form').classList.remove(['.ad-form--disabled']);
+  document.querySelector('.map__filters').classList.remove(['.map__filters--disabled']);
+  document.querySelectorAll('fieldset').forEach((item) => item.disabled = false);
+  Array.from(document.querySelector('.map__filters')).forEach((item) => item.disabled = false);
+}
+
