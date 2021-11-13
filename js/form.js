@@ -1,5 +1,5 @@
-import { getCoordinates } from './map.js';
-
+import { postData } from './data.js';
+import { getCoordinates, mainMarker, map, setDefaultPosition } from './map.js';
 const form = document.querySelector('.ad-form');
 const houseType = document.querySelector('#type');
 const roomNumber = document.querySelector('#room_number');
@@ -8,6 +8,16 @@ const capacity = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 export const address = document.querySelector('#address');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(form);
+  postData(data);
+});
+
+form.addEventListener('reset', () => {
+  clearForm();
+});
 
 houseType.addEventListener('change', (event) => {
   changeHousePrice(event.target.value);
@@ -32,6 +42,18 @@ export function setDefaultForm() {
   form.action = 'https://24.javascript.pages.academy/keksobooking';
   changeRoomNumber(1);
   changeHousePrice('flat');
+}
+
+export function clearForm() {
+  form.reset();
+  map.closePopup();
+  mainMarker.setLatLng([35.652832, 139.839478]);
+  setDefaultPosition();
+  changeRoomNumber(1);
+  changeHousePrice('flat');
+  setTimeout(() => {
+    address.value = `lat ${math.round(getCoordinates().lat, 5)}, lng ${math.round(getCoordinates().lng, 5)}`;
+  });
 }
 
 function changeRoomNumber(rooms) {
@@ -66,20 +88,5 @@ function getPrice(currentHouseType) {
     default:
       return '0';
   }
-}
-
-export function setActivePageState() {
-  address.value = `lat ${math.round(getCoordinates().lat, 5)}, lng ${math.round(getCoordinates().lng, 5)}`;
-  document.querySelector('.ad-form').classList.add(['.ad-form--disabled']);
-  document.querySelector('.map__filters').classList.add(['.map__filters--disabled']);
-  document.querySelectorAll('fieldset').forEach((item) => item.disabled = true);
-  Array.from(document.querySelector('.map__filters')).forEach((item) => item.disabled = true);
-}
-
-export function setDisabledPageState() {
-  document.querySelector('.ad-form').classList.remove(['.ad-form--disabled']);
-  document.querySelector('.map__filters').classList.remove(['.map__filters--disabled']);
-  document.querySelectorAll('fieldset').forEach((item) => item.disabled = false);
-  Array.from(document.querySelector('.map__filters')).forEach((item) => item.disabled = false);
 }
 
