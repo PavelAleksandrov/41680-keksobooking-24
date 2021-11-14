@@ -1,48 +1,28 @@
-import { CHECK_TIME, FEATURES, PHOTOS, TYPES } from './data.js';
-
-const getRandomNumber = (from, to) => {
-  from = Math.floor(from);
-  to = Math.ceil(to);
-  if (from < 0 || to < 0) {
-    throw new Error('Ошибка, значения диапазона не могут быть отрицательными.');
-  }
-  if (to <= from) {
-    throw new Error('Ошибка, значение диапазона "до" меньше или равно значению "от".');
-  }
-  return math.random(to, from);
-};
-
-const getRandomNumberWithDec = (from, to, decimal = 0) => math.random(from, to).toFixed(decimal);
-
-const getAdsWithRandomData = (adsCount) => {
+export function prepareAdverts(data) {
   const similarAds = [];
-  for (let i = 1; i <= adsCount; i++) {
-    const obj = {
+  for (const item of data) {
+    similarAds.push({
       author: {
-        avatar: `img/avatars/user${i.toString().length > 1 ? i : `0${i}`}.png`,
+        avatar: item.author.avatar,
       },
       offer: {
-        title: 'Отличный вариант',
-        address: '',
-        price: getRandomNumberWithDec(1000, 8000),
-        type: TYPES[getRandomNumberWithDec(0, TYPES.length - 1)],
-        rooms: getRandomNumberWithDec(1, 4),
-        guests: getRandomNumberWithDec(1, 7),
-        checkin: CHECK_TIME[getRandomNumberWithDec(0, CHECK_TIME.length - 1)],
-        checkout: CHECK_TIME[getRandomNumberWithDec(0, CHECK_TIME.length - 1)],
-        features: FEATURES.slice(0, getRandomNumberWithDec(1, FEATURES.length)),
-        description: 'С видом на море',
-        photos: PHOTOS.slice(0, getRandomNumberWithDec(1, PHOTOS.length)),
+        title: item.offer.title,
+        address: item.offer.address,
+        price: item.offer.price,
+        type: item.offer.type,
+        rooms: item.offer.rooms,
+        guests: item.offer.guests,
+        checkin: item.offer.checkin,
+        checkout: item.offer.checkout,
+        features: item.offer.features,
+        description: item.offer.description,
+        photos: item.offer.photos,
       },
       location: {
-        lat: getRandomNumberWithDec(35.65000, 35.70000, 5),
-        lng: getRandomNumberWithDec(139.70000, 139.80000, 5),
+        lat: math.round(item.location.lat, 5),
+        lng: math.round(item.location.lng, 5),
       },
-    };
-    obj.offer.address = `${obj.location.lat}, ${obj.location.lng}`;
-    similarAds.push(obj);
+    });
   }
   return similarAds;
-};
-
-export { getRandomNumber, getRandomNumberWithDec, getAdsWithRandomData };
+}

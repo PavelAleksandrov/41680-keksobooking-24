@@ -1,12 +1,17 @@
-import { setActivePageState, address } from './form.js';
-import { getAdsWithRandomData } from './utils.js';
+import { address } from './form.js';
+import { setActivePageState } from './main.js';
+import { getData } from './data.js';
 
-const map = L.map('map-canvas')
+export const map = L.map('map-canvas')
   .setView([35.652832, 139.839478], 10);
 L.tileLayer(
   'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
-  .on('load', () => setActivePageState())
+  .once('load', () => {
+    setDefaultPosition();
+    setActivePageState();
+    getData();
+  })
   .addTo(map);
 
 const mainPinIcon = L.icon({
@@ -21,20 +26,20 @@ const otherPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-const mainMarker = L.marker(
+export const mainMarker = L.marker(
   [35.652832, 139.839478],
   {
     draggable: true,
     icon: mainPinIcon,
   });
 
-mainMarker.addTo(map);
-
 mainMarker.on('moveend', (event) => {
   address.value = `lat ${math.round(event.target.getLatLng().lat, 5)}, lng ${math.round(event.target.getLatLng().lng, 5)}`;
 });
 
-const points = getAdsWithRandomData(20);
+export function setDefaultPosition() {
+  mainMarker.addTo(map);
+}
 
 const createCustomPopup = (ad) => {
   const popupElement = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
@@ -66,12 +71,12 @@ const createCustomPopup = (ad) => {
   } else {
     popupElement.querySelector('.popup__text--time').remove();
   }
-  if (ad.offer.features.length) {
+  if (ad.offer.features && ad.offer.features.length) {
     popupElement.querySelector('.popup__features').innerHTML = `${getFeatures(ad.offer.features)}`;
   } else {
     popupElement.querySelector('.popup__features').remove();
   }
-  if (ad.offer.photos.length) {
+  if (ad.offer.photos && ad.offer.photos.length) {
     popupElement.querySelector('.popup__photos').innerHTML = getImages(ad.offer.photos);
   } else {
     popupElement.querySelector('.popup__photos').remove();
@@ -80,16 +85,18 @@ const createCustomPopup = (ad) => {
   return popupElement;
 };
 
-points.forEach((point) => {
-  const marker = L.marker(
-    [point.location.lat, point.location.lng],
-    {
-      icon: otherPinIcon,
-    });
-  marker
-    .addTo(map)
-    .bindPopup(createCustomPopup(point));
-});
+export function generateAdvertPins(similarAds) {
+  similarAds.forEach((point) => {
+    const marker = L.marker(
+      [point.location.lat, point.location.lng],
+      {
+        icon: otherPinIcon,
+      });
+    marker
+      .addTo(map)
+      .bindPopup(createCustomPopup(point));
+  });
+}
 
 function getFeatures(features) {
   const allFeatures = [];
