@@ -1,59 +1,67 @@
 import { postData } from './data.js';
 import { getCoordinates, mainMarker, map, setDefaultPosition } from './map.js';
-const form = document.querySelector('.ad-form');
+import { changeFilter } from './filter.js';
+
+export const address = document.querySelector('#address');
+const adForm = document.querySelector('.ad-form');
+const filterForm = document.querySelector('.map__filters');
 const houseType = document.querySelector('#type');
 const roomNumber = document.querySelector('#room_number');
 const price = document.querySelector('#price');
 const capacity = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
-export const address = document.querySelector('#address');
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const data = new FormData(form);
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const data = new FormData(adForm);
   postData(data);
 });
 
-form.addEventListener('reset', () => {
+adForm.addEventListener('reset', () => {
   clearForm();
 });
 
-houseType.addEventListener('change', (event) => {
-  changeHousePrice(event.target.value);
-});
-roomNumber.addEventListener('change', (event) => {
-  changeRoomNumber(event.target.value);
-});
-timeIn.addEventListener('change', (event) => {
-  changeTime(event.target.value, timeOut);
-});
-timeOut.addEventListener('change', (event) => {
-  changeTime(event.target.value, timeIn);
+filterForm.addEventListener('change', (evt) => {
+  changeFilter(evt.target.name, evt.target.value);
 });
 
-function changeTime(currentTime, timeForChange) {
-  Array.from(timeForChange).forEach((option) => option.selected = option.value === currentTime);
-}
+houseType.addEventListener('change', (evt) => {
+  changeHousePrice(evt.target.value);
+});
+roomNumber.addEventListener('change', (evt) => {
+  changeRoomNumber(evt.target.value);
+});
+timeIn.addEventListener('change', (evt) => {
+  changeTime(evt.target.value, timeOut);
+});
+timeOut.addEventListener('change', (evt) => {
+  changeTime(evt.target.value, timeIn);
+});
 
 export function setDefaultForm() {
-  form.method = 'post';
-  form.enctype = 'multipart/form-data';
-  form.action = 'https://24.javascript.pages.academy/keksobooking';
+  adForm.method = 'post';
+  adForm.enctype = 'multipart/form-data';
+  adForm.action = 'https://24.javascript.pages.academy/keksobooking';
   changeRoomNumber(1);
   changeHousePrice('flat');
 }
 
 export function clearForm() {
-  form.reset();
+  adForm.reset();
   map.closePopup();
   mainMarker.setLatLng([35.652832, 139.839478]);
   setDefaultPosition();
   changeRoomNumber(1);
   changeHousePrice('flat');
   setTimeout(() => {
+    // eslint-disable-next-line no-undef
     address.value = `lat ${math.round(getCoordinates().lat, 5)}, lng ${math.round(getCoordinates().lng, 5)}`;
   });
+}
+
+function changeTime(currentTime, timeForChange) {
+  Array.from(timeForChange).forEach((option) => option.selected = option.value === currentTime);
 }
 
 function changeRoomNumber(rooms) {

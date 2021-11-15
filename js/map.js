@@ -2,6 +2,7 @@ import { address } from './form.js';
 import { setActivePageState } from './main.js';
 import { getData } from './data.js';
 
+let advertsLayer;
 export const map = L.map('map-canvas')
   .setView([35.652832, 139.839478], 10);
 L.tileLayer(
@@ -13,33 +14,22 @@ L.tileLayer(
     getData();
   })
   .addTo(map);
-
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
-
-const otherPinIcon = L.icon({
-  iconUrl: '../img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [26, 52],
-});
-
 export const mainMarker = L.marker(
   [35.652832, 139.839478],
   {
     draggable: true,
     icon: mainPinIcon,
   });
-
-mainMarker.on('moveend', (event) => {
-  address.value = `lat ${math.round(event.target.getLatLng().lat, 5)}, lng ${math.round(event.target.getLatLng().lng, 5)}`;
+const otherPinIcon = L.icon({
+  iconUrl: '../img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [26, 52],
 });
-
-export function setDefaultPosition() {
-  mainMarker.addTo(map);
-}
 
 const createCustomPopup = (ad) => {
   const popupElement = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
@@ -85,17 +75,40 @@ const createCustomPopup = (ad) => {
   return popupElement;
 };
 
-export function generateAdvertPins(similarAds) {
-  similarAds.forEach((point) => {
+mainMarker.on('moveend', (event) => {
+  // eslint-disable-next-line no-undef
+  address.value = `lat ${math.round(event.target.getLatLng().lat, 5)}, lng ${math.round(event.target.getLatLng().lng, 5)}`;
+});
+
+export function setDefaultPosition() {
+  mainMarker.addTo(map);
+}
+
+export function generateAdvertPins(data) {
+  const adverts = [...data];
+  if (adverts.length > 10) {
+    adverts.length = 10;
+  }
+  const markers = [];
+  for (const item of adverts) {
     const marker = L.marker(
-      [point.location.lat, point.location.lng],
+      [item.location.lat, item.location.lng],
       {
         icon: otherPinIcon,
       });
     marker
-      .addTo(map)
-      .bindPopup(createCustomPopup(point));
-  });
+      .bindPopup(createCustomPopup(item));
+    markers.push(marker);
+  }
+  if (advertsLayer) {
+    map.removeLayer(advertsLayer);
+  }
+  advertsLayer = L.layerGroup(markers);
+  advertsLayer.addTo(map);
+}
+
+export function getCoordinates() {
+  return mainMarker.getLatLng();
 }
 
 function getFeatures(features) {
@@ -146,12 +159,4 @@ function getAdType(type) {
     case 'hotel':
       return 'Отель';
   }
-}
-
-export function a() {
-  return false;
-}
-
-export function getCoordinates() {
-  return mainMarker.getLatLng();
 }
