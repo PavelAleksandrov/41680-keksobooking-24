@@ -76,7 +76,6 @@ const createCustomPopup = (ad) => {
 };
 
 mainMarker.on('moveend', (event) => {
-  // eslint-disable-next-line no-undef
   address.value = `lat ${math.round(event.target.getLatLng().lat, 5)}, lng ${math.round(event.target.getLatLng().lng, 5)}`;
 });
 

@@ -55,7 +55,6 @@ export function clearForm() {
   changeRoomNumber(1);
   changeHousePrice('flat');
   setTimeout(() => {
-    // eslint-disable-next-line no-undef
     address.value = `lat ${math.round(getCoordinates().lat, 5)}, lng ${math.round(getCoordinates().lng, 5)}`;
   });
 }

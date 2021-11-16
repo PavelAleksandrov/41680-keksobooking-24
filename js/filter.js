@@ -45,9 +45,7 @@ export function prepareAdverts(data) {
         photos: data[i].offer.photos,
       },
       location: {
-        // eslint-disable-next-line no-undef
         lat: math.round(data[i].location.lat, 5),
-        // eslint-disable-next-line no-undef
         lng: math.round(data[i].location.lng, 5),
       },
     });
@@ -59,8 +57,7 @@ function setFilters() {
   const mapAds = new Map();
   const ads = [];
   for (const item of similarAds) {
-    // eslint-disable-next-line no-unused-vars
-    mainloop: for (const state in filtersState) {
+    mainloop: for (let i = 0; i < filtersState.length; i++) {
       if (item.offer.type !== filtersState['housing-type'] && filtersState['housing-type'] !== 'any') {
         continue;
       }

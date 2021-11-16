@@ -8,7 +8,6 @@ window.addEventListener('load', () => {
 });
 
 export function setDisabledPageState() {
-  // eslint-disable-next-line no-undef
   address.value = `lat ${math.round(getCoordinates().lat, 5)}, lng ${math.round(getCoordinates().lng, 5)}`;
   document.querySelector('.ad-form').classList.add(['.ad-form--disabled']);
   document.querySelector('.map__filters').classList.add(['.map__filters--disabled']);
