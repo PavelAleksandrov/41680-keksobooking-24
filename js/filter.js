@@ -10,7 +10,7 @@ const filtersState = {
   'features': [],
 };
 
-export function changeFilter(type, value) {
+export function change(type, value) {
   if (type === 'features') {
     const i = filtersState.features.findIndex((item) => item === value);
     if (i >= 0 && filtersState.features[i] === value) {
@@ -21,7 +21,7 @@ export function changeFilter(type, value) {
   } else {
     filtersState[type] = value;
   }
-  setFilters();
+  set();
 }
 
 export function prepareAdverts(data) {
@@ -53,11 +53,11 @@ export function prepareAdverts(data) {
   return similarAds;
 }
 
-function setFilters() {
+function set() {
   const mapAds = new Map();
   const ads = [];
   for (const item of similarAds) {
-    mainloop: for (let i = 0; i < filtersState.length; i++) {
+    mainloop: for (let i = 0; i < Object.keys(filtersState).length; i++) {
       if (item.offer.type !== filtersState['housing-type'] && filtersState['housing-type'] !== 'any') {
         continue;
       }

@@ -1,6 +1,6 @@
 import { postData } from './data.js';
 import { getCoordinates, mainMarker, map, setDefaultPosition } from './map.js';
-import { changeFilter } from './filter.js';
+import { change } from './filter.js';
 
 export const address = document.querySelector('#address');
 const adForm = document.querySelector('.ad-form');
@@ -23,7 +23,7 @@ adForm.addEventListener('reset', () => {
 });
 
 filterForm.addEventListener('change', (evt) => {
-  changeFilter(evt.target.name, evt.target.value);
+  change(evt.target.name, evt.target.value);
 });
 
 houseType.addEventListener('change', (evt) => {

@@ -31,7 +31,7 @@ const otherPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-const createCustomPopup = (ad) => {
+function createCustomPopup(ad) {
   const popupElement = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
   popupElement.querySelector('.popup__avatar').src = ad.author.avatar || popupElement.querySelector('.popup__avatar').remove();
   popupElement.querySelector('.popup__title').textContent = ad.offer.title || popupElement.querySelector('.popup__title').remove();

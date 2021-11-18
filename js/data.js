@@ -56,6 +56,6 @@ export async function postData(data) {
       element.removeEventListener('click', () => {});
       element.remove();
     });
-    throw new Error();
+    throw new Error('Форма заполнена неправильно');
   }
 }
