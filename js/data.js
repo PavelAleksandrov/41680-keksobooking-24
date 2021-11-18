@@ -1,6 +1,6 @@
 import { prepareAdverts } from './filter.js';
 import { generateAdvertPins } from './map.js';
-import { clearForm } from './form.js';
+import { clear } from './form.js';
 
 const loadErrorBlock = document.querySelector('.load-error');
 const errorTemplateFragment = document.querySelector('#error').content;
@@ -31,7 +31,7 @@ export async function postData(data) {
     const element = successTemplate.cloneNode(true);
     fragment.appendChild(element);
     document.querySelector('body').appendChild(fragment);
-    clearForm();
+    clear();
     document.addEventListener('keydown', (event) => {
       if(event.key === 'Escape'){
         document.removeEventListener('keydown', () => {});

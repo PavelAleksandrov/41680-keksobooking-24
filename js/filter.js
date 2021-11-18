@@ -1,5 +1,6 @@
 import { generateAdvertPins } from './map.js';
 import { debounce } from './utils/debounce.js';
+import { round } from './utils/round.js';
 
 const similarAds = [];
 const filtersState = {
@@ -45,8 +46,8 @@ export function prepareAdverts(data) {
         photos: data[i].offer.photos,
       },
       location: {
-        lat: math.round(data[i].location.lat, 5),
-        lng: math.round(data[i].location.lng, 5),
+        lat: round(data[i].location.lat, 5),
+        lng: round(data[i].location.lng, 5),
       },
     });
   }

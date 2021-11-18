@@ -1,6 +1,7 @@
 import { address } from './form.js';
 import { setActivePageState } from './main.js';
 import { getData } from './data.js';
+import { round } from './utils/round.js';
 
 let advertsLayer;
 export const map = L.map('map-canvas')
@@ -42,7 +43,9 @@ function createCustomPopup(ad) {
     popupElement.querySelector('.popup__text--address').remove();
   }
   if (ad.offer.price) {
-    popupElement.querySelector('.popup__text--price').innerHTML = `${ad.offer.price} <span>₽/ночь</span>`;
+    const price = `${ad.offer.price} <span>₽/ночь</span>`;
+    popupElement.querySelector('.popup__text--price').innerHTML = '';
+    popupElement.querySelector('.popup__text--price').insertAdjacentHTML('beforeend', price);
   } else {
     popupElement.querySelector('.popup__text--price').remove();
   }
@@ -62,21 +65,25 @@ function createCustomPopup(ad) {
     popupElement.querySelector('.popup__text--time').remove();
   }
   if (ad.offer.features && ad.offer.features.length) {
-    popupElement.querySelector('.popup__features').innerHTML = `${getFeatures(ad.offer.features)}`;
+    const features = `${getFeatures(ad.offer.features)}`;
+    popupElement.querySelector('.popup__features').innerHTML = '';
+    popupElement.querySelector('.popup__features').insertAdjacentHTML('beforeend', features);
   } else {
     popupElement.querySelector('.popup__features').remove();
   }
   if (ad.offer.photos && ad.offer.photos.length) {
-    popupElement.querySelector('.popup__photos').innerHTML = getImages(ad.offer.photos);
+    const photos = getImages(ad.offer.photos);
+    popupElement.querySelector('.popup__photos').innerHTML = '';
+    popupElement.querySelector('.popup__photos').insertAdjacentHTML('beforeend', photos);
   } else {
     popupElement.querySelector('.popup__photos').remove();
   }
 
   return popupElement;
-};
+}
 
 mainMarker.on('moveend', (event) => {
-  address.value = `lat ${math.round(event.target.getLatLng().lat, 5)}, lng ${math.round(event.target.getLatLng().lng, 5)}`;
+  address.value = `lat ${round(event.target.getLatLng().lat, 5)}, lng ${round(event.target.getLatLng().lng, 5)}`;
 });
 
 export function setDefaultPosition() {
